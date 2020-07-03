@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean name="taskDao" class="org.example.dao.TaskDaoSimple"/>
+    <bean name="taskService" class="org.example.service.TaskServiceImpl">
+        <constructor-arg name="dao" ref="taskDao"/>
+    </bean>
+    <bean name="answerDao" class="org.example.dao.AnswerDaoAll"/>
+    <bean name="answerService" class="org.example.service.AnswerServiceImpl">
+        <constructor-arg name="dao" ref="answerDao"/>
+    </bean>
+</beans>
