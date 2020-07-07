@@ -1,12 +1,13 @@
 package org.example.service;
 
-import org.example.domain.AnswerOnTask;
 import org.example.domain.Person;
-import org.springframework.stereotype.Service;
 
-@Service
+import java.util.Locale;
+
 public interface MessegeService {
-    Person MessegeFullName(Person newPerson);
-    Person MessegeQuestion(AnswerOnTask answer,Person newPerson);
-    void MessegeResult(Person person);
+    String getSurnameMessage(Locale locale);
+    String getNameMessage(Locale locale);
+    String getQuestionMessage(Locale locale,int i);
+    String getQuestionsMessage(Locale locale);
+    String getResultMessage(Locale locale,Person person);
 }
