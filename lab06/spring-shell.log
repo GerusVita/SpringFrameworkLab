@@ -1,0 +1,30 @@
+1594305215131:addAuthor violet
+1594305223990:help
+1594305240455:add-author violet
+1594305277281:add-genre fntesy
+1594305296136:add-book lili 124 71
+1594305694249:help
+1594305704415:read-all author
+1594306400963:delete-all author
+1594306430076:delete-all book
+1594306440293:read-all book
+1594306452611:delete-all author
+1594306462471:read-all author
+1594306483684:read-all genre
+1594306544810:read=all genre
+1594306565137:read-all genre
+1594306578293:delete-all genre
+1594307166958:create-author vivi
+1594307172565:help
+1594307182020:add-author vivi
+1594307211882:update-author violet 125
+1594307230351:read-all author
+1594307270220:add-authar sidorenco
+1594307295440:add-author sidorenko
+1594307308486:read-all author
+1594307520344:read-all book
+1594307558392:read-all author
+1594307570696:read-all genre
+1594307581254:add-genre wow
+1594307609286:add-book book 125 72
+1594307646801:update-book 71 wow 125 72
