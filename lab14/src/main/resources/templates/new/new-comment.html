@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>new-comment</title>
+</head>
+<body>
+<div class="container" layout:fragment="~{main}">
+    <hr/>
+    <form class="form" method="post" th:action="@{/comment/save}" th:object="${comment}">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" th:for="id"></label>
+            <div class="col-sm-10">
+                <input class="form-control" type="hidden" th:field="*{id}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" th:for="text">Text</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" th:field="*{text}"  th:classappend="${#fields.hasErrors('text')?'is-invalid':''}">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" th:for="reader">Reader</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" th:field="*{reader.name}"  th:classappend="${#fields.hasErrors('reader')?'is-invalid':''}">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('reader')}" th:errors="*{reader}"></div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" th:for="book">Book</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" th:field="*{book.title}"  th:classappend="${#fields.hasErrors('book')?'is-invalid':''}">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('book')}" th:errors="*{book}"></div>
+            </div>
+        </div>
+        <input class="btn btn-success" type="submit" value="Save">
+    </form>
+</div>
+</body>
+</html>

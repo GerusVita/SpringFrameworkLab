@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>reader</title>
+</head>
+<body>
+<div class="container" layout:fragment="~{main}">
+    <hr/>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Comments</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="reader : ${readers}">
+                <td th:text="${reader.name}"></td>
+                <td><p th:each="comment : ${reader.comment}" th:text="${comment.text}"></p></td>
+                <td><a class="btn btn-danger" th:href="@{/reader/delete/{id}(id = ${reader.id})}">delete reader</a></td>
+                <td>    <a class="btn btn-light" th:href="@{/reader/update/{id}(id=${reader.id})}">Edit</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <a class="btn btn-info" th:href="@{/reader/new}">new reader</a>
+</div>
+</body>
+</html>

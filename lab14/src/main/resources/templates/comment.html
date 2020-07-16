@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>comment</title>
+</head>
+<body>
+<div class="container" layout:fragment="~{main}">
+    <hr/>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th>Text</th>
+                <th>Reader</th>
+                <th>Book</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="coment : ${comments}">
+                <td th:text="${coment.text}"></td>
+                <td th:text="${coment.reader}"></td>
+                <td th:text="${coment.book}"></td>
+                <td><a class="btn btn-danger" th:href="@{/comment/delete/{id}(id = ${coment.id})}">delete comment</a></td>
+                <td>    <a class="btn btn-light" th:href="@{/comment/update/{id}(id=${coment.id})}">Edit</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <a class="btn btn-info" th:href="@{/comment/new}">new comment</a>
+</div>
+</body>
+</html>
