@@ -1,0 +1,25 @@
+<hr/>
+<div class="container">
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+      <tr>
+        <th>Text</th>
+        <th>Reader</th>
+        <th>Book</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let comment of commentaries">
+        <td>{{comment.text}}</td>
+        <td>{{comment.reader.name}}</td>
+        <td>{{comment.book.title}}</td>
+        <td><a class="btn btn-danger" (click)="delete(comment.id)">delete comment</a></td>
+        <td>    <a class="btn btn-light" [routerLink]="[comment.id]">Edit</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <a class="btn btn-info" [routerLink]="['create']">new comment</a>
+</div>

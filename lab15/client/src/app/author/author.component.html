@@ -1,0 +1,24 @@
+<hr/>
+<div class="container">
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+      <tr>
+        <th>Author</th>
+        <th>Books</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor= "let author of authors">
+        <td>{{author.fullName}}</td>
+        <td><p *ngFor="let book of author.books">{{book.title}}</p></td>
+        <td><a class="btn btn-danger" (click)="delete(author.id)">delete author</a></td>
+        <td>    <a class="btn btn-light" [routerLink]="[author.id]">Edit</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <a class="btn btn-info" [routerLink]="['create']">new author</a>
+</div>
+
