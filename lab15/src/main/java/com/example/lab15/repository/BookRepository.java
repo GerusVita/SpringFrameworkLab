@@ -1,7 +1,7 @@
-package com.example.lab14.repository;
+package com.example.lab15.repository;
 
 
-import com.example.lab14.domain.Book;
+import com.example.lab15.domain.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

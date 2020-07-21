@@ -1,4 +1,6 @@
-package com.example.lab14.domain;
+package com.example.lab15.domain;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -11,6 +13,14 @@ public class Genre {
     private long id;
     @Column(name = "title")
     private String title;
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
+    }
 
     @OneToMany(mappedBy = "genre", cascade = CascadeType.ALL)
     private Set<Book> books = new HashSet<>();

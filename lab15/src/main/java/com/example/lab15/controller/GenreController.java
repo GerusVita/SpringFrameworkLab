@@ -1,51 +1,37 @@
-package com.example.lab14.controller;
+package com.example.lab15.controller;
 
-import com.example.lab14.domain.Genre;
-import com.example.lab14.service.GenreService;
+import com.example.lab15.domain.Genre;
+import com.example.lab15.service.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
-@Controller
+@RestController
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/api")
 public class GenreController {
     @Autowired
     private GenreService genreService;
 
     @GetMapping("/genre")
-    public String allGenre(Model model){
-        model.addAttribute("genres",genreService.allGenre());
-        return "genre";
+    public List<Genre> allGenre(){
+        return genreService.allGenre();
     }
-
-    @GetMapping("/genre/new")
-    public String newGenre(Model model){
-        model.addAttribute("genre",new Genre());
-        return "new/new-genre";
-    }
-    @GetMapping("/genre/update/{id}")
-    public String updateGenre(@PathVariable Long id,Model model){
-        model.addAttribute("genre",genreService.getOneById(id));
-        return "new/new-genre";
+    @GetMapping("/genre/{id}")
+    public Genre getOneGenre(@PathVariable Long id){
+        return genreService.getOneById(id);
     }
     @PostMapping("/genre/save")
-    public String saveGenre(@ModelAttribute @Valid Genre genre, BindingResult bindingResult, Model model){
-        if(bindingResult.hasErrors()){
-            model.addAttribute("genre",genre);
-            return "new/new-genre";
-        }
+    public void saveGenre(@RequestBody @Valid Genre genre){
         genreService.addGenre(genre);
-        return "redirect:/genre";
     }
-    @GetMapping("/genre/delete/{id}")
-    public String deleteGenre(@PathVariable Long id, Model model){
+    @DeleteMapping("/genre/{id}/delete")
+    public void deleteGenre(@PathVariable Long id){
         genreService.deleteById(id);
-        return "redirect:/genre";
     }
 }

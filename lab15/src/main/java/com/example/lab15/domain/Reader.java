@@ -1,4 +1,6 @@
-package com.example.lab14.domain;
+package com.example.lab15.domain;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.HashSet;

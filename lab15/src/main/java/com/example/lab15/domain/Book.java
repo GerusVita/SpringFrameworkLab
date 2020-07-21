@@ -1,10 +1,14 @@
-package com.example.lab14.domain;
+package com.example.lab15.domain;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Book.class)
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,7 +26,7 @@ public class Book {
     private Genre genre;
 
     @OneToMany(mappedBy = "book",cascade = CascadeType.ALL)
-    private Set<Commentary> comment = new HashSet<>();
+    private Set<Commentary> comments = new HashSet<>();
 
     public long getId() {
         return id;
@@ -56,12 +60,12 @@ public class Book {
         this.genre = genre;
     }
 
-    public Set<Commentary> getComment() {
-        return comment;
+    public Set<Commentary> getComments() {
+        return comments;
     }
 
-    public void setComment(Set<Commentary> comment) {
-        this.comment = comment;
+    public void setComments(Set<Commentary> comment) {
+        this.comments = comment;
     }
 
     @Override

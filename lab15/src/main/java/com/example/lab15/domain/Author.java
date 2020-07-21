@@ -1,12 +1,13 @@
-package com.example.lab14.domain;
+package com.example.lab15.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "author")
-public class Author {
+public class Author implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

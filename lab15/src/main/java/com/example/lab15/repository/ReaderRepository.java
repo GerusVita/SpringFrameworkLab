@@ -1,6 +1,6 @@
-package com.example.lab14.repository;
+package com.example.lab15.repository;
 
-import com.example.lab14.domain.Reader;
+import com.example.lab15.domain.Reader;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,9 +1,10 @@
-package com.example.lab14.service;
+package com.example.lab15.service;
 
-import com.example.lab14.domain.Author;
-import com.example.lab14.domain.Book;
-import com.example.lab14.domain.Genre;
-import com.example.lab14.repository.BookRepository;
+import com.example.lab15.domain.Author;
+import com.example.lab15.domain.Book;
+import com.example.lab15.domain.Genre;
+import com.example.lab15.repository.BookRepository;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,34 +21,49 @@ public class BookService {
     @Autowired
     private GenreService genreService;
 
-    public void addBook(Book book){
+    public void addBook(Book book) {
         Author author = authorService.getOneByName(book.getAuthor().getFullName());
-        if(author!=null)
+        if (author != null)
             book.setAuthor(author);
         Genre genre = genreService.getOneByTitle(book.getGenre().getTitle());
-        if(genre!=null)
+        if (genre != null)
             book.setGenre(genre);
         bookRepository.save(book);
     }
-    public List<Book> getAll(){
-        return bookRepository.findAll();
+
+    public List<Book> getAll() {
+        List<Book> list = bookRepository.findAll();
+        list.forEach(book -> Hibernate.initialize(book.getComments()));
+        return list;
     }
-    public Book getOneByTitle(String name){
+
+    public Book getOneByTitle(String name) {
         return bookRepository.findBookByTitle(name);
     }
-    public Book getOneById(Long id){
-        return bookRepository.getOne(id);
+
+    @Transactional(readOnly = true)
+    public Book getOneById(Long id) {
+        Book book = bookRepository.getOne(id);
+        Hibernate.initialize(book.getAuthor());
+        Hibernate.initialize(book.getGenre());
+        return book;
     }
-    public List<Book> getBooksByGenreId(Long id){
-        return bookRepository.getBooksByGenre_Id(id);
+
+    public List<Book> getBooksByGenreId(Long id) {
+        List<Book> books = bookRepository.getBooksByGenre_Id(id);
+        books.forEach(book -> Hibernate.initialize(book.getComments()));
+        return books;
     }
-    public void deleteByTitle(String name){
+
+    public void deleteByTitle(String name) {
         bookRepository.deleteBookByTitle(name);
     }
-    public void deleteById(Long id){
+
+    public void deleteById(Long id) {
         bookRepository.deleteById(id);
     }
-    public void deleteAll(){
+
+    public void deleteAll() {
         bookRepository.deleteAll();
     }
 }

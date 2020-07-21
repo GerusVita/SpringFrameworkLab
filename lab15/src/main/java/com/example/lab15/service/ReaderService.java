@@ -1,7 +1,8 @@
-package com.example.lab14.service;
+package com.example.lab15.service;
 
-import com.example.lab14.domain.Reader;
-import com.example.lab14.repository.ReaderRepository;
+import com.example.lab15.domain.Reader;
+import com.example.lab15.repository.ReaderRepository;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,25 +15,34 @@ public class ReaderService {
     @Autowired
     private ReaderRepository readerRepository;
 
-    public void addReader(Reader reader){
+    public void addReader(Reader reader) {
         readerRepository.save(reader);
     }
-    public List<Reader> allReader(){
+
+    public List<Reader> allReader() {
         return readerRepository.findAll();
     }
-    public Reader getOneByName(String name){
+
+    public Reader getOneByName(String name) {
         return readerRepository.findReaderByName(name);
     }
-    public Reader getOneById(Long id){
-        return readerRepository.getOne(id);
+
+    @Transactional(readOnly = true)
+    public Reader getOneById(Long id) {
+        Reader reader = readerRepository.getOne(id);
+        Hibernate.initialize(reader.getComment());
+        return reader;
     }
-    public void deleteOneById(Long id){
+
+    public void deleteOneById(Long id) {
         readerRepository.deleteById(id);
     }
-    public void deleteOneByName(String name){
+
+    public void deleteOneByName(String name) {
         readerRepository.findReaderByName(name);
     }
-    public void deleteAll(){
+
+    public void deleteAll() {
         readerRepository.deleteAll();
     }
 }

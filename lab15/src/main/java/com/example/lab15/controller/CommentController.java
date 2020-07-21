@@ -1,23 +1,23 @@
-package com.example.lab14.controller;
+package com.example.lab15.controller;
 
-import com.example.lab14.domain.Book;
-import com.example.lab14.domain.Commentary;
-import com.example.lab14.domain.Reader;
-import com.example.lab14.service.BookService;
-import com.example.lab14.service.CommentaryService;
-import com.example.lab14.service.ReaderService;
+import com.example.lab15.domain.Book;
+import com.example.lab15.domain.Commentary;
+import com.example.lab15.domain.Reader;
+import com.example.lab15.service.BookService;
+import com.example.lab15.service.CommentaryService;
+import com.example.lab15.service.ReaderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
-@Controller
+@RestController
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/api")
 public class CommentController {
     @Autowired
     CommentaryService commentaryService;
@@ -27,39 +27,19 @@ public class CommentController {
     BookService bookService;
 
     @GetMapping("/comment")
-    public String getAllComments(Model model){
-        model.addAttribute("comments",commentaryService.getAll());
-        return "comment";
+    public List<Commentary> getAllComments(){
+        return commentaryService.getAll();
     }
-
-    @GetMapping("/comment/new")
-    public String newComment(Model model){
-        model.addAttribute("comment",new Commentary());
-        return "new/new-comment";
-    }
-    @GetMapping("/comment/update")
-    public String updateComment(@PathVariable Long id,Model model){
-        model.addAttribute("comment",commentaryService.getOneById(id));
-        return "new/new-comment";
+    @GetMapping("/comment/{id}")
+    public Commentary getOneComment(@PathVariable Long id){
+        return commentaryService.getOneById(id);
     }
     @PostMapping("/comment/save")
-    public String saveComment(@ModelAttribute @Valid Commentary commentary, BindingResult bindingResult, Model model){
-        if(bindingResult.hasErrors()){
-            model.addAttribute("comment",commentary);
-            return "new/new-comment";
-        }
-        Reader reader = readerService.getOneByName(commentary.getReader().getName());
-        if(reader!=null)
-            commentary.setReader(reader);
-        Book book = bookService.getOneByTitle(commentary.getBook().getTitle());
-        if(book!=null)
-            commentary.setBook(book);
+    public void saveComment(@RequestBody @Valid Commentary commentary){
         commentaryService.addComment(commentary);
-        return "redirect:/book";
     }
-    @GetMapping("/comment/delete/{id}")
-    public String deleteComment(@PathVariable Long id, Model model){
+    @DeleteMapping("/comment/{id}/delete")
+    public void deleteComment(@PathVariable Long id){
         commentaryService.deleteById(id);
-        return "redirect:/comment";
     }
 }

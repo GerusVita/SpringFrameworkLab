@@ -1,50 +1,42 @@
-package com.example.lab14.controller;
+package com.example.lab15.controller;
 
-import com.example.lab14.domain.Author;
-import com.example.lab14.service.AuthorService;
+import com.example.lab15.domain.Author;
+import com.example.lab15.service.AuthorService;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
-@Controller
+@RestController
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/api")
 public class AuthorController {
     @Autowired
     AuthorService authorService;
 
     @GetMapping("/author")
-    public String getAllAuthor(Model model){
-        model.addAttribute("authors",authorService.allAuthors());
-        return "author";
+    public List<Author> getAllAuthor() {
+        return authorService.allAuthors();
     }
-    @GetMapping("/author/new")
-    public String newAuthor(Model model){
-        model.addAttribute("author",new Author());
-        return "new/new-author";
+
+    @GetMapping("/author/{id}")
+    public Author getOneAuthor(@PathVariable Long id) {
+        return authorService.getOneById(id);
     }
-    @GetMapping("/author/update/{id}")
-    public String updateAuthor(@PathVariable Long id,Model model){
-        model.addAttribute("author",authorService.getOneById(id));
-        return "new/new-author";
-    }
+
     @PostMapping("/author/save")
-    public String saveAuthor(@ModelAttribute @Valid Author author, BindingResult bindingResult, Model model){
-        if(bindingResult.hasErrors()){
-            model.addAttribute("author",author);
-            return "new/new-author";
-        }
+    public void saveAuthor(@RequestBody @Valid Author author) {
         authorService.addAuthor(author);
-        return "redirect:/author";
     }
-    @GetMapping("/author/delete/{id}")
-    public String deleteAuthor(@PathVariable Long id, Model model){
+
+    @DeleteMapping("/author/{id}/delete")
+    public void deleteAuthor(@PathVariable Long id) {
         authorService.deleteById(id);
-        return "redirect:/author";
     }
 }
